@@ -1,0 +1,69 @@
+body {
+  margin: auto;
+  background-color: rgba(56, 51, 51, 0.295);
+}
+
+h1 {
+  font-size: 24px;
+}
+
+#tela {
+  margin-block: 5rem;
+  margin-inline: 15rem;
+
+  min-width: 35rem;
+  min-height: 10rem;
+  width: auto;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: white;
+  border: 2px solid black;
+}
+
+#tela header {
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  width: 95%;
+
+  align-items: center;
+  justify-content: center;
+}
+
+#tela header button {
+  grid-column: 1;
+  width: fit-content;
+}
+
+#tela header h1 {
+  grid-column: 2;
+
+  justify-self: left;
+
+  color: #005ca8;
+}
+
+#container-principal {
+  display: flex;
+  flex-direction: column;
+
+  width: auto;
+  height: auto;
+  align-items: center;
+}
+
+#container-principal p {
+  color: #005ca8;
+}
+
+#container-principal #botoes-iniciais {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  padding: 1rem;
+
+  gap: 5rem;
+}
