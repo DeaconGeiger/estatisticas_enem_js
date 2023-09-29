@@ -53,15 +53,6 @@ export default class TelaFaixaEtaria {
     elementosCena.push(containerPrincipal);
 
     const controller = new FaixaEtariaController(elementosCena);
-
-    function listaPeriodo(anoInicial, anoFinal) {
-      let anos = [];
-      for (let ano = anoInicial; ano <= anoFinal; ano++) {
-        anos.push(`${ano}`);
-      }
-
-      return anos;
-    }
   }
 
   #criarBotao(id, texto) {
