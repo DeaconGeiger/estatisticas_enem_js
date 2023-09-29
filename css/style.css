@@ -25,6 +25,12 @@ button:hover {
   background-color: rgb(136, 136, 136);
 }
 
+button:disabled {
+  color: gray;
+  background-color: rgb(224, 224, 224);
+  cursor: default;
+}
+
 #tela {
   margin-block: 5rem;
   margin-inline: 15rem;
@@ -120,17 +126,20 @@ button:hover {
   width: 100%;
 }
 
-.conteudo-menu a {
+.item-menu {
   color: black;
-  text-decoration: none;
+  text-align: center;
   display: flex;
 
   justify-content: center;
+  align-items: center;
+
+  height: 3rem;
 
   width: 100%;
 }
 
-.conteudo-menu a:hover {
+.item-menu:hover {
   background-color: #ddd;
   cursor: pointer;
 }
