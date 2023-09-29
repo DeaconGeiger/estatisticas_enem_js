@@ -3,73 +3,91 @@ import ControllerBase from "./ControllerBase.js";
 export default class FaixaEtariaController extends ControllerBase {
 
   #graficoFaixaEtaria;
+  #botaoVoltarAoInicio;
+  #barraAnalise;
   #menuFaixaEtaria;
   #menuModeloEnem;
   #menuPeriodoFinal;
   #menuPeriodoInicial;
+  #botaoPlotar;
+  #botaoLimpar;
 
   constructor(elementosCena) {
     super();
     this.definirCena(elementosCena);
 
+    this.#botaoVoltarAoInicio = document.getElementById("voltar-inicio");
+    this.#botaoVoltarAoInicio.addEventListener("click", evento => this.voltarAoInicio(evento));
+
+    this.#barraAnalise = document.getElementById("barra-analise");
+    this.#barraAnalise.style.visibility = "hidden";
+
+    this.#menuModeloEnem = document.getElementById("modelo-enem");
     this.#menuPeriodoInicial = document.getElementById("periodo-inicial");
     this.#menuPeriodoFinal = document.getElementById("periodo-final");
-    this.#menuModeloEnem = document.getElementById("modelo-enem");
     this.#menuFaixaEtaria = document.getElementById("faixa-etaria");
 
-    this.configurarMenu(this.#menuPeriodoInicial);
-    this.configurarMenu(this.#menuPeriodoFinal);
+    this.#botaoPlotar = document.getElementById("botao-plotar");
+    this.#botaoPlotar.addEventListener("click", evento => this.plotarGrafico(evento));
+
+    this.#botaoLimpar = document.getElementById("botao-limpar");
+    this.#botaoLimpar.addEventListener("click", evento => this.limparGrafico(evento));
+    
     this.configurarMenu(this.#menuModeloEnem);
     this.configurarMenu(this.#menuFaixaEtaria);
-
+    
+    const itensModeloEnem = Array.from(this.#menuModeloEnem.lastChild.children);
+    itensModeloEnem.forEach(item => {
+      item.addEventListener("click", evento => this.iniciarAnalise(evento));
+    });
+  
     this.configurarFechamentoMenus();
   }
 
-  voltarAoInicio(event) {
-    voltarAoInicioBase(event);
+  voltarAoInicio(evento) {
+    this.voltarAoInicioBase(evento);
   }
 
-  limparGrafico(event) {
-    graficoFaixaEtaria.getData().clear();
-    menuPeriodoInicial.setDisable(false);
-    menuPeriodoFinal.setDisable(false);
-    menuFaixaEtaria.getItems().forEach(item => item.setDisable(false));
+  limparGrafico(evento) {
+    this.#menuPeriodoInicial.firstChild.disabled = false;
+    this.#menuPeriodoFinal.firstChild.disabled = false;
   }
 
-  iniciarAnalise(event) {
-    limparGrafico(event);
-    iniciarAnaliseBase(event);
+  iniciarAnalise(evento) {
+    //limparGrafico(evento);
+    this.iniciarAnaliseBase(evento);
   }
 
-  plotarGrafico(event) {
-    var periodoInicial = null;
-    var periodoFinal = null;
-    var faixaEtaria;
-  }
-}
-    /* try {
-      periodoInicial = Number.parseInt(menuPeriodoInicial.getText());
-      periodoFinal = Number.parseInt(menuPeriodoFinal.getText());
-      faixaEtaria = menuFaixaEtaria.getText();
-      if (itemEstaDesabilitado(faixaEtaria, menuFaixaEtaria))
-        throw new IOException("A faixa etária já foi selecionada!");
-      else if (faixaEtaria.equals("Selecione a faixa etária"))
-        throw new IOException("É preciso selecionar a faixa etária!");
-    } catch (error) {
-      Alert alerta = new Alert(Alert.AlertType.ERROR);
-      alerta.setTitle("Erro!");
-      alerta.setContentText(e.getMessage());
-      alerta.showAndWait();
-      return;
-    } catch (NumberFormatException e) {
-      Alert alerta = new Alert(Alert.AlertType.ERROR);
-      alerta.setTitle("Erro!");
-      alerta.setContentText("É necessário informar o período a ser analisado!");
-      alerta.showAndWait();
+  plotarGrafico(evento) {
+    let periodoInicial;
+    let periodoFinal;
+    let faixaEtaria;
+
+    try {
+      periodoInicial = Number.parseInt(this.#menuPeriodoInicial.innerText);
+      periodoFinal = Number.parseInt(this.#menuPeriodoFinal.innerText);
+      if (Number.isNaN(periodoInicial) || Number.isNaN(periodoFinal))
+        throw new TypeError("É preciso informar o período!");
+      faixaEtaria = this.#menuFaixaEtaria.innerText;
+      if (faixaEtaria == "Selecione a faixa etária") {
+        throw new TypeError("É preciso selecionar a faixa etária!");
+      }
+    } catch (erro) {
+      alert("Erro!\n\n" + erro.message);
       return;
     }
+    
+    if (!this.periodoValido(periodoInicial, periodoFinal))
+      return;
 
-    if (!periodoValido(periodoInicial, periodoFinal))
+    this.#menuPeriodoInicial.firstChild.disabled = true;
+    this.#menuPeriodoFinal.firstChild.disabled = true;
+
+    console.log("Período válido!");
+  }
+}
+
+    /*if (!periodoValido(periodoInicial, periodoFinal))
       return;
 
     XYChart.Series<String, Number> series = new XYChart.Series<>();
