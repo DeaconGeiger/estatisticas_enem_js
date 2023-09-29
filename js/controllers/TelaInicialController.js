@@ -10,8 +10,10 @@ export default class TelaInicialController extends ControllerBase {
   #botaoMediaProvaObjetiva
   #botaoMediaRedacao
 
-  constructor() {
+  constructor(elementosCena) {
     super();
+    this.definirCena(elementosCena);
+
     this.#botaoFaixaEtaria = document.getElementById("faixa-etaria");
     this.#botaoGeneroInscritos = document.getElementById("genero");
     this.#botaoInscritos = document.getElementById("total-inscritos");
