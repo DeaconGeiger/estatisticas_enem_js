@@ -1,11 +1,9 @@
 import TelaInicialController from "../controllers/TelaInicialController.js";
 
 export default class TelaInicial {
-  #main;
 
   constructor() {
-    this.#main = document.getElementById("tela");
-    this.#main.innerHTML = '';
+    const elementosCena = [];
 
     const botaoFaixaEtaria = this.#criarBotao("faixa-etaria", "FAIXA ETÁRIA");
     const botaoGeneroInscritos = this.#criarBotao("genero", "GÊNERO DOS INSCRITOS");
@@ -35,10 +33,10 @@ export default class TelaInicial {
     containerPrincipal.innerHTML = `<p>Selecione a variável a ser analisada:</p>`;
     containerPrincipal.appendChild(navegacao);
 
-    this.#main.appendChild(cabecalho);
-    this.#main.appendChild(containerPrincipal);
+    elementosCena.push(cabecalho);
+    elementosCena.push(containerPrincipal);
 
-    const controller = new TelaInicialController();
+    const controller = new TelaInicialController(elementosCena);
   }
 
   #criarBotao(id, texto) {
