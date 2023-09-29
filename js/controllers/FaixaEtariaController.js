@@ -1,17 +1,28 @@
-import ControllerBase from "./ControllerBase";
+import ControllerBase from "./ControllerBase.js";
 
 export default class FaixaEtariaController extends ControllerBase {
 
   #graficoFaixaEtaria;
   #menuFaixaEtaria;
-  #menuItemEnemAntigo;
-  #menuItemEnemNovo;
   #menuModeloEnem;
   #menuPeriodoFinal;
   #menuPeriodoInicial;
 
-  constructor() {
-    super()
+  constructor(elementosCena) {
+    super();
+    this.definirCena(elementosCena);
+
+    this.#menuPeriodoInicial = document.getElementById("periodo-inicial");
+    this.#menuPeriodoFinal = document.getElementById("periodo-final");
+    this.#menuModeloEnem = document.getElementById("modelo-enem");
+    this.#menuFaixaEtaria = document.getElementById("faixa-etaria");
+
+    this.configurarMenu(this.#menuPeriodoInicial);
+    this.configurarMenu(this.#menuPeriodoFinal);
+    this.configurarMenu(this.#menuModeloEnem);
+    this.configurarMenu(this.#menuFaixaEtaria);
+
+    this.configurarFechamentoMenus();
   }
 
   voltarAoInicio(event) {
@@ -22,7 +33,7 @@ export default class FaixaEtariaController extends ControllerBase {
     graficoFaixaEtaria.getData().clear();
     menuPeriodoInicial.setDisable(false);
     menuPeriodoFinal.setDisable(false);
-    menuFaixaEtaria.getItems().forEach(item -> item.setDisable(false));
+    menuFaixaEtaria.getItems().forEach(item => item.setDisable(false));
   }
 
   iniciarAnalise(event) {
@@ -34,8 +45,9 @@ export default class FaixaEtariaController extends ControllerBase {
     var periodoInicial = null;
     var periodoFinal = null;
     var faixaEtaria;
-    
-    try {
+  }
+}
+    /* try {
       periodoInicial = Number.parseInt(menuPeriodoInicial.getText());
       periodoFinal = Number.parseInt(menuPeriodoFinal.getText());
       faixaEtaria = menuFaixaEtaria.getText();
@@ -81,5 +93,4 @@ export default class FaixaEtariaController extends ControllerBase {
     }
 
     graficoFaixaEtaria.getData().add(series);
-  }
-}
+  } */
