@@ -20,6 +20,7 @@ export default class ControllerBase {
   }
 
   iniciarAnaliseBase(evento) {
+    const modeloEnem = document.getElementById('modelo-enem').innerText;
     const barraAnalise = document.getElementById("barra-analise");
     const menuPeriodoInicial = document.getElementById("periodo-inicial");
     const menuPeriodoFinal = document.getElementById("periodo-final");
@@ -27,7 +28,7 @@ export default class ControllerBase {
     const conteudoMenuPeriodoFinal = menuPeriodoFinal.lastChild;
     let anoPeriodoInicial;
     let anoPeriodoFinal;
-    if (evento.target.innerText == "Modelo Novo") {
+    if (modeloEnem == "Modelo Antigo") {
       anoPeriodoInicial = 1998;
       anoPeriodoFinal = 2008;
     } else {
@@ -72,17 +73,26 @@ export default class ControllerBase {
   configurarMenu(menu) {
     const botaoMenu = menu.firstChild;
     const conteudoMenu = menu.lastChild;
-    botaoMenu.addEventListener("click", () => {
-      conteudoMenu.classList.toggle("menu-ativo");
-    });
+
+    botaoMenu.onclick = () => conteudoMenu.classList.toggle("menu-ativo");
+
+    // Verificar se o texto do menu é um número, para então reiniciar e colocar o texto correto
+    if (!Number.isNaN(Number.parseInt(botaoMenu.innerText)))
+      reiniciarTextoMenu(menu);
 
     const itensMenu = Array.from(conteudoMenu.children);
     itensMenu.map(item => {
       item.addEventListener("click", () => {
         botaoMenu.innerText = item.innerText;
         conteudoMenu.classList.remove("menu-ativo");
-      })
-    })
+      });
+    });
+
+    function reiniciarTextoMenu(menu) {
+      const botao = menu.firstChild;
+      const texto = menu.id.split('-')[1];
+      botao.innerText = texto[0].toUpperCase() + texto.substring(1);
+    }
   }
 
   configurarFechamentoMenus() {
