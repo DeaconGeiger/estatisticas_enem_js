@@ -42,7 +42,7 @@ class DadosEnemAntigo extends DadosEnem {
         }
     
     obterMediaNotasProvaObjetiva() {
-        const notasString = this.arquivoCSV.obterColuna("NU_NOTA_OBJETIVA");
+        const notasString=this.arquivoCSV.obterColuna("NU_NOTA_OBJETIVA");
         return this.obterMediaValores(notasString);
     }
 }

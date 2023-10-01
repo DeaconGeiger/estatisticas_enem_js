@@ -1,6 +1,6 @@
 //código de teste (sujeito a mudanças)
 
-const fs = require('fs'); //file system
+const fs=require('fs'); //file system
 
 class ArquivoCSV {
   constructor(caminhoArquivo) {

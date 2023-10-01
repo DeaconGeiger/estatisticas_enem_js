@@ -116,7 +116,7 @@ class DadosEnem {
         const numerosInscritosPorGenero=this.obterNumeroInscritosPorGenero();
         const percentualInscritosPorGenero=new Map();
     
-        const total = this.obterTotalInscritos();
+        const total=this.obterTotalInscritos();
     
         numerosInscritosPorGenero.forEach((valor, chave) => {
             const valorPercentual=(valor/total)*100;
