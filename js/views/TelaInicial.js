@@ -36,7 +36,7 @@ export default class TelaInicial {
     elementosCena.push(cabecalho);
     elementosCena.push(containerPrincipal);
 
-    const controller = new TelaInicialController(elementosCena);
+    new TelaInicialController(elementosCena);
   }
 
   #criarBotao(id, texto) {
