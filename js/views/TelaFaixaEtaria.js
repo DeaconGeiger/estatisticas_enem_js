@@ -11,6 +11,7 @@ export default class TelaFaixaEtaria {
     const containerPrincipal = document.createElement("div");
     const selecaoModelo = document.createElement("nav");
     const barraAnalise = document.createElement("nav");
+    const graficoFaixaEtaria = document.createElement("canvas");
     const textoPeriodo = document.createElement("p");
 
     titulo.innerText = 'FAIXA ETÁRIA POR ANO';
@@ -35,24 +36,27 @@ export default class TelaFaixaEtaria {
     
     barraAnalise.appendChild(textoPeriodo);
 
-    const menuPeriodoInicial = this.#criarMenu("Inicial", listaPeriodo(1998, 2008));
+    const menuPeriodoInicial = this.#criarMenu("Inicial");
     menuPeriodoInicial.setAttribute("id", "periodo-inicial");
     barraAnalise.appendChild(menuPeriodoInicial);
 
-    const menuPeriodoFinal = this.#criarMenu("Final", listaPeriodo(2009, 2022))
+    const menuPeriodoFinal = this.#criarMenu("Final")
     menuPeriodoFinal.setAttribute("id", "periodo-final");
     barraAnalise.appendChild(menuPeriodoFinal);
 
     barraAnalise.appendChild(this.#criarBotao("botao-plotar", "Plotar gráfico"));
     barraAnalise.appendChild(this.#criarBotao("botao-limpar", "Limpar gráfico"));
 
+    graficoFaixaEtaria.setAttribute("id", "grafico-faixa-etaria");
+
     containerPrincipal.appendChild(selecaoModelo);
     containerPrincipal.appendChild(barraAnalise);
+    containerPrincipal.appendChild(graficoFaixaEtaria);
 
     elementosCena.push(cabecalho);
     elementosCena.push(containerPrincipal);
 
-    const controller = new FaixaEtariaController(elementosCena);
+    new FaixaEtariaController(elementosCena);
   }
 
   #criarBotao(id, texto) {
@@ -62,7 +66,7 @@ export default class TelaFaixaEtaria {
     return botao;
   }
 
-  #criarMenu(textoMenu, nomeItens) {
+  #criarMenu(textoMenu, nomeItens = []) {
     const menu = document.createElement("div");
     menu.classList.add("menu");
     const botaoMenu = document.createElement("button");

@@ -3,6 +3,7 @@ import ControllerBase from "./ControllerBase.js";
 export default class FaixaEtariaController extends ControllerBase {
 
   #graficoFaixaEtaria;
+  #painelGrafico;
   #botaoVoltarAoInicio;
   #barraAnalise;
   #menuFaixaEtaria;
@@ -42,6 +43,35 @@ export default class FaixaEtariaController extends ControllerBase {
     });
   
     this.configurarFechamentoMenus();
+
+    this.#painelGrafico = document.getElementById("grafico-faixa-etaria");
+
+    this.#graficoFaixaEtaria = new Chart(this.#painelGrafico.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: []
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: "Faixa etária dos inscritos por ano",
+            font: {
+              weight: 'bold',
+              size: '16px'
+            }
+          }
+        }
+      }
+    });
+
+    this.#painelGrafico.style.visibility = 'hidden';
   }
 
   voltarAoInicio(evento) {
@@ -51,11 +81,19 @@ export default class FaixaEtariaController extends ControllerBase {
   limparGrafico(evento) {
     this.#menuPeriodoInicial.firstChild.disabled = false;
     this.#menuPeriodoFinal.firstChild.disabled = false;
+    this.#menuPeriodoInicial.lastChild.innerHTML = '';
+    this.#menuPeriodoFinal.lastChild.innerHTML = '';
+
+    this.iniciarAnaliseBase(evento);
+    
+    this.#graficoFaixaEtaria.data = { labels: [], datasets: [] };
+    this.#graficoFaixaEtaria.update();
   }
 
   iniciarAnalise(evento) {
-    //limparGrafico(evento);
-    this.iniciarAnaliseBase(evento);
+    this.limparGrafico(evento);
+
+    this.#painelGrafico.style.visibility = 'visible';
   }
 
   plotarGrafico(evento) {
@@ -83,32 +121,58 @@ export default class FaixaEtariaController extends ControllerBase {
     this.#menuPeriodoInicial.firstChild.disabled = true;
     this.#menuPeriodoFinal.firstChild.disabled = true;
 
-    console.log("Período válido!");
-  }
-}
-
-    /*if (!periodoValido(periodoInicial, periodoFinal))
-      return;
-
-    XYChart.Series<String, Number> series = new XYChart.Series<>();
-    series.setName(faixaEtaria);
-
-    menuPeriodoInicial.setDisable(true);
-    menuPeriodoFinal.setDisable(true);
-    menuFaixaEtaria.getItems().forEach(item -> {
-      if (item.getText().equals(faixaEtaria))
-        item.setDisable(true);
-    });
-
-    for (int ano = periodoInicial; ano <= periodoFinal; ano++) {
-      int dado = 0;
-      if (ano <= 2008)
-        dado = new DadosEnemAntigo(ano).obterRelacaoIdade().get(faixaEtaria);
-      else
-        dado = new DadosEnemNovo(ano).obterRelacaoIdade().get(faixaEtaria);
-
-      series.getData().add(new XYChart.Data<>("" + ano, dado));
+    const data = this.#graficoFaixaEtaria.data;
+    if (typeof data.datasets[data.datasets.length - 1] != 'undefined') {
+      var [backgroundColor, borderColor] = corNovoDado();
     }
 
-    graficoFaixaEtaria.getData().add(series);
-  } */
+    const dadoAdicionado = { label: faixaEtaria, data: [], backgroundColor: backgroundColor, borderColor: borderColor, borderWidth: 1 };
+
+    let teste = 100;
+    
+    for (let ano = periodoInicial; ano <= periodoFinal; ano++) {
+      if (!data.labels.includes(ano))
+        data.labels.push(ano);
+      dadoAdicionado.data.push(teste);
+      teste *= 2;
+    }
+
+    data.datasets.push(dadoAdicionado);
+
+    this.#graficoFaixaEtaria.destroy();
+    this.#graficoFaixaEtaria = null;
+
+    this.#graficoFaixaEtaria = new Chart(this.#painelGrafico.getContext('2d'), {
+      type: 'line',
+      data: data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: "Faixa etária dos inscritos por ano",
+            font: {
+              weight: 'bold',
+              size: '16px'
+            }
+          }
+        }
+      }
+    });
+
+    function corNovoDado() {
+      let r = Math.floor(Math.random() * 256);
+      let g = Math.floor(Math.random() * 256);
+      let b = Math.floor(Math.random() * 256);
+    
+      const corFundo = `rgba(${r}, ${g}, ${b}, 0.5)`;
+      const corBorda = `rgb(${r}, ${g}, ${b})`;
+    
+      return [corFundo, corBorda];
+    }
+  }
+}
