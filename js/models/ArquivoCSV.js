@@ -4,19 +4,18 @@ const fs = require('fs'); //file system
 
 class ArquivoCSV {
   constructor(caminhoArquivo) {
-    this.caminhoArquivo = caminhoArquivo;
-    this.nomeColunasArquivo = [];
+    this.caminhoArquivo=caminhoArquivo;
+    this.nomeColunasArquivo=[];
   }
 
-
   carregarArquivo(nomeArquivo) {
-    const arquivo = `${this.caminhoArquivo}${nomeArquivo}.csv`;
+    const arquivo=`${this.caminhoArquivo}${nomeArquivo}.csv`;
     try {
-      const data = fs.readFileSync(arquivo, 'utf8');
-      const linhas = data.split('\n');
+      const data=fs.readFileSync(arquivo, 'utf8');
+      const linhas=data.split('\n');
 
-      this.nomeColunasArquivo = linhas[0].split(';'); //primeira linha contém nomes das colunas
-      this.quantidadeLinhasValidas = linhas.length - 1; //número de linhas -1 (primeira)
+      this.nomeColunasArquivo=linhas[0].split(';'); //primeira linha contém nomes das colunas
+      this.quantidadeLinhasValidas=linhas.length-1; //número de linhas -1 (primeira)
     } catch (err) {
       console.error(`O arquivo não foi encontrado: ${arquivo}`);
       console.error('Informe o nome do arquivo corretamente!');
@@ -30,22 +29,22 @@ class ArquivoCSV {
 
 
   obterColuna(nomeColuna) {
-    const indiceColuna = this.nomeColunasArquivo.indexOf(nomeColuna);
-    if (indiceColuna === -1) {
+    const indiceColuna=this.nomeColunasArquivo.indexOf(nomeColuna);
+    if (indiceColuna===-1) {
       throw new Error(`Coluna não encontrada: ${nomeColuna}`);
     }
-    const arquivo = `${this.caminhoArquivo}${nomeArquivo}.csv`;
+    const arquivo=`${this.caminhoArquivo}${nomeArquivo}.csv`;
 
     try {
-      const data = fs.readFileSync(arquivo, 'utf8');
-      const linhas = data.split('\n');
+      const data=fs.readFileSync(arquivo, 'utf8');
+      const linhas=data.split('\n');
 
       linhas.shift(); //remoção do cabeçalho (linha 1) 
 
-      const coluna = [];
+      const coluna=[];
       for (const linha of linhas) {
-        const elementosLinha = linha.split(';');
-        const elementoColuna = elementosLinha[indiceColuna];
+        const elementosLinha=linha.split(';');
+        const elementoColuna=elementosLinha[indiceColuna];
         coluna.push(elementoColuna);
       }
 
@@ -63,16 +62,3 @@ class ArquivoCSV {
 
 
 
-
-/*
-  exemplo de uso
-  
-const arquivoCSV = new ArquivoCSV('/caminho/para/arquivos/');
-arquivoCSV.carregarArquivo('seuarquivo');
-
-const quantidadeLinhas = arquivoCSV.obterQuantidadeLinhasValidas();
-console.log(`Quantidade de linhas válidas: ${quantidadeLinhas}`);
-
-const colunaNome = arquivoCSV.obterColuna('Nome');
-console.log(`Coluna "Nome": ${colunaNome}`);
-*/
