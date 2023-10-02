@@ -1,3 +1,6 @@
+const { ArquivoCSV } = require("./ArquivoCSV.js");
+const { DadosEnem } = require("./DadosEnem.js");
+
 class DadosEnemAntigo extends DadosEnem {
     constructor(ano) {
         super();
@@ -7,7 +10,7 @@ class DadosEnemAntigo extends DadosEnem {
             }
     
             this.arquivoCSV=new ArquivoCSV("microdados-enem/antigo/");
-            const nomeArquivo=`enem_${ano}`;
+            const nomeArquivo = `enem_${ano}`;
             this.arquivoCSV.carregarArquivo(nomeArquivo);
     
             this.ano=String(ano);
@@ -18,12 +21,12 @@ class DadosEnemAntigo extends DadosEnem {
     }
   
 
-    obterTotalInscritos() {
-        const linhasTabela=this.arquivoCSV.obterColuna("NU_INSCRICAO");
-        return parseInt(linhasTabela[linhasTabela.length - 1]);
+     obterTotalInscritos() {
+        const linhasTabela = this.arquivoCSV.obterColuna("NU_INSCRICAO");
+        return parseInt(linhasTabela[linhasTabela.length - 2]);
     }
   
-    obterRelacaoEstados() {
+     obterRelacaoEstados() {
         const relacao=new Map();
         const colunaUF=this.arquivoCSV.obterColuna("SG_UF_RESIDENCIA");
     
@@ -41,9 +44,10 @@ class DadosEnemAntigo extends DadosEnem {
         return this.ordenarAlfabeticamenteInt(relacao);
         }
     
-    obterMediaNotasProvaObjetiva() {
+     obterMediaNotasProvaObjetiva() {
         const notasString=this.arquivoCSV.obterColuna("NU_NOTA_OBJETIVA");
         return this.obterMediaValores(notasString);
     }
 }
   
+module.exports = { DadosEnemAntigo };

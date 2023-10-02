@@ -1,3 +1,6 @@
+const { DadosEnem } = require("./DadosEnem.js");
+const { ArquivoCSV } = require("./ArquivoCSV.js");
+
 class DadosEnemNovo extends DadosEnem {
     constructor(ano) {
         super();
@@ -23,7 +26,7 @@ class DadosEnemNovo extends DadosEnem {
     }
   
 
-    obterRelacaoEstados() {
+     obterRelacaoEstados() {
         const relacao=new Map();
         const colunaUF=this.arquivoCSV.obterColuna("SG_UF_ESC");
   
@@ -52,23 +55,24 @@ class DadosEnemNovo extends DadosEnem {
     }
   
 
-    obterMediaProvaCN() {
+     obterMediaProvaCN() {
         return this.obterMediaValores(this.arquivoCSV.obterColuna("NU_NOTA_CN"));
     }
   
 
-    obterMediaProvaCH() {
+     obterMediaProvaCH() {
         return this.obterMediaValores(this.arquivoCSV.obterColuna("NU_NOTA_CH"));
     }
   
 
-    obterMediaProvaLC() {
+     obterMediaProvaLC() {
         return this.obterMediaValores(this.arquivoCSV.obterColuna("NU_NOTA_LC"));
     }
   
 
-    obterMediaProvaMT() {
+     obterMediaProvaMT() {
         return this.obterMediaValores(this.arquivoCSV.obterColuna("NU_NOTA_MT"));
     }
 }
   
+module.exports = { DadosEnemNovo };

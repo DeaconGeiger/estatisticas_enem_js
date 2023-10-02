@@ -5,13 +5,14 @@ const fs=require('fs'); //file system
 class ArquivoCSV {
   constructor(caminhoArquivo) {
     this.caminhoArquivo=caminhoArquivo;
-    this.nomeColunasArquivo=[];
+    this.nomeColunasArquivo = [];
+    this.arquivo = null;
   }
 
   carregarArquivo(nomeArquivo) {
-    const arquivo=`${this.caminhoArquivo}${nomeArquivo}.csv`;
+    this.arquivo = `${this.caminhoArquivo}${nomeArquivo}.csv`;
     try {
-      const data=fs.readFileSync(arquivo, 'utf8');
+      const data=fs.readFileSync(this.arquivo, 'utf8');
       const linhas=data.split('\n');
 
       this.nomeColunasArquivo=linhas[0].split(';'); //primeira linha contém nomes das colunas
@@ -33,10 +34,9 @@ class ArquivoCSV {
     if (indiceColuna===-1) {
       throw new Error(`Coluna não encontrada: ${nomeColuna}`);
     }
-    const arquivo=`${this.caminhoArquivo}${nomeArquivo}.csv`;
 
     try {
-      const data=fs.readFileSync(arquivo, 'utf8');
+      const data=fs.readFileSync(this.arquivo, 'utf8');
       const linhas=data.split('\n');
 
       linhas.shift(); //remoção do cabeçalho (linha 1) 
@@ -56,7 +56,7 @@ class ArquivoCSV {
   }
 }
 
-
+module.exports = { ArquivoCSV };
 
 
 

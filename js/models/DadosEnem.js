@@ -1,7 +1,8 @@
 class DadosEnem {
-    constructor(ano,arquivoCSV) {
-        this.ano=ano;
-        this.arquivoCSV=arquivoCSV;
+    constructor() {
+        if (this.constructor == DadosEnem) {
+            throw new Error("Esta é uma classe abstrata e não pode ser instanciada!")
+          }
     }
   
     obterRelacaoEstados() {
@@ -14,7 +15,7 @@ class DadosEnem {
     }
   
 
-    obterRelacaoIdade() {
+     obterRelacaoIdade() {
         const colunaIdade=this.arquivoCSV.obterColuna("TP_FAIXA_ETARIA");
         const relacaoIdade=new Map();
     
@@ -87,7 +88,7 @@ class DadosEnem {
     }
 
     
-    obterNumeroInscritosPorGenero() {
+     obterNumeroInscritosPorGenero() {
         const colunaInscritosPorGenero=this.arquivoCSV.obterColuna("TP_SEXO");
         const inscritosPorGenero=new Map();
     
@@ -153,7 +154,7 @@ class DadosEnem {
     }
     
 
-      obterMediaNotasRedacao() {
+       obterMediaNotasRedacao() {
         const notasString=this.arquivoCSV.obterColuna("NU_NOTA_REDACAO");
         return this.obterMediaValores(notasString);
     }
@@ -183,7 +184,7 @@ class DadosEnem {
     }
 }    
 
-
+module.exports = { DadosEnem };
 
 
 
