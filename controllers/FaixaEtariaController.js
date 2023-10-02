@@ -1,5 +1,5 @@
 const { DadosEnemAntigo } = require('../models/DadosEnemAntigo.js');
-const { DadosEnemNovo } = require('../js/models/DadosEnemNovo.js');
+const { DadosEnemNovo } = require('../models/DadosEnemNovo.js');
 const { ControllerBase } = require('./ControllerBase.js');
 const prompt = require('prompt-sync')({ sigint: true });
 
