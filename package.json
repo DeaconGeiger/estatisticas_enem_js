@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  },
+  "name": "estatisticas-enem",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Davi Bittencourt e Hélio Sampaio",
+  "license": "ISC",
+  "description": ""
+}
